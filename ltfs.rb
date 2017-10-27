@@ -17,16 +17,16 @@ class Ltfs < Formula
   depends_on "libxml2" => :build
   depends_on "net-snmp" => :build
   depends_on "icu4c" => :build
-  depends_on "gnu-sed" => :build 
+  depends_on "gnu-sed" => :build
 
   def install
     ENV.deparallelize
-    #ENV['CC'] = 'gcc'
+    ENV['CC'] = '/usr/bin/clang'
 
     system "./autogen.sh"
     system "./configure", "--prefix=#{prefix}"
-    system "make" 
-    system "make", "install" 
+    system "make"
+    system "make", "install"
   end
 
   test do
