@@ -15,13 +15,14 @@ class Ltfs < Formula
   depends_on :osxfuse
   depends_on "ossp-uuid" => :build
   depends_on "libxml2" => :build
-  depends_on "net-snmp" => :build
   depends_on "icu4c" => :build
   depends_on "gnu-sed" => :build
 
+  env :std
+
   def install
     ENV.deparallelize
-    ENV['CC'] = '/usr/bin/clang'
+    #ENV['CC'] = 'gcc'
 
     system "./autogen.sh"
     system "./configure", "--prefix=#{prefix}"
