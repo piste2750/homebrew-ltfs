@@ -5,8 +5,8 @@
 class Ltfs < Formula
   desc "Reference implementation of the LTFS format Spec for stand alone tape drive"
   homepage ""
-  url "https://github.com/LinearTapeFileSystem/ltfs/archive/master.tar.gz#/ltfs-2.4.0.0.tar.gz"
-  sha256 "dd190dffb33cdf99b818c0ad7a8fe8328a0c857933d328c7090401c6ddacf131"
+  url "https://github.com/LinearTapeFileSystem/ltfs/archive/e21abd816210d53dc4df70af6baad25d3a1d7c89.tar.gz#/ltfs-2.4.0.0-1.tar.gz"
+  sha256 "d634efe7ba7378ffa840ba6ca61653048fb95fe3d94491872808ed04679e9819"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -22,10 +22,10 @@ class Ltfs < Formula
 
   def install
     ENV.deparallelize
-    #ENV['CC'] = 'gcc'
+    ENV['CC'] = 'gcc'
 
     system "./autogen.sh"
-    system "./configure", "--prefix=#{prefix}"
+    system "./configure", "--prefix=#{prefix}", "--disable-snmp"
     system "make"
     system "make", "install"
   end
