@@ -5,8 +5,8 @@
 class Ltfs < Formula
   desc "Reference implementation of the LTFS format Spec for stand alone tape drive"
   homepage ""
-  url "https://github.com/LinearTapeFileSystem/ltfs/archive/e21abd816210d53dc4df70af6baad25d3a1d7c89.tar.gz#/ltfs-2.4.0.0-1.tar.gz"
-  sha256 "d634efe7ba7378ffa840ba6ca61653048fb95fe3d94491872808ed04679e9819"
+  url "https://github.com/LinearTapeFileSystem/ltfs/archive/14b1eeddc47255579250bd01741a750e1d7dcdd4.tar.gz#/ltfs-2.4.0.1-0.tar.gz"
+  sha256 "e09fca90236cd4cb0982289d134ccad5bf59a68a9275997315cb5dd013d1dc28"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -23,6 +23,7 @@ class Ltfs < Formula
   def install
     ENV.deparallelize
     ENV['CC'] = 'gcc'
+    ENV['LDFLAGS'] = '-framework CoreFoundation -framework IOKit'
 
     system "./autogen.sh"
     system "./configure", "--prefix=#{prefix}", "--disable-snmp"
