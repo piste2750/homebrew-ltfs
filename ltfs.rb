@@ -5,18 +5,22 @@
 class Ltfs < Formula
   desc "Reference implementation of the LTFS format Spec for stand alone tape drive"
   homepage ""
-  url "https://github.com/LinearTapeFileSystem/ltfs/archive/c581544f5859b3112a9f184b68217ba5cad49bcd.tar.gz#/ltfs-2.4.0.2-0.tar.gz"
-  sha256 "37c3e627593c9c9a89147acda1b7d22ffb2db1e7773e895a9503a983d1c8a131"
+  url "https://github.com/LinearTapeFileSystem/ltfs/archive/b1ec9c626b38ed2ec824b14dd671dfb6cea2579b.tar.gz#/ltfs-2.4.1.0-0.tar.gz"
+  sha256 "652f643b00ee083d39c4f4419dbe40042f443e5b9fd2b09052625fe8eeb9e669"
+
+  head do
+    url "https://github.com/LinearTapeFileSystem/ltfs.git"
+  end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
   depends_on "pkg-config" => :build
-  depends_on :osxfuse
-  depends_on "ossp-uuid" => :build
-  depends_on "libxml2" => :build
-  depends_on "icu4c" => :build
   depends_on "gnu-sed" => :build
+  depends_on :osxfuse
+  depends_on "ossp-uuid"
+  depends_on "libxml2"
+  depends_on "icu4c"
 
   env :std
 
