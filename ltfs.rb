@@ -5,8 +5,8 @@
 class Ltfs < Formula
   desc "Reference implementation of the LTFS format Spec for stand alone tape drive"
   homepage ""
-  url "https://github.com/LinearTapeFileSystem/ltfs/archive/725912b88bc0e0467a73c39a89cbfc78d3f44f55.tar.gz#/ltfs-2.4.1.2-10254.tar.gz"
-  sha256 "552e465b7e5f3ca3e6e997213ed574ae3f3d6fbf14af608df69b639d4ef3a867"
+  url "https://github.com/LinearTapeFileSystem/ltfs/archive/v2.4.2.0-10418.tar.gz"
+  sha256 "cc6ae69f56b48ab09263eed40147b039a00e0440027159b40dac2b147cdb5e57"
 
   head do
     url "https://github.com/LinearTapeFileSystem/ltfs.git"
