@@ -2,6 +2,33 @@
 #                http://www.rubydoc.info/github/Homebrew/brew/master/Formula
 # PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 
+class OsxfuseRequirement < Requirement
+  fatal true
+
+  satisfy(build_env: false) { self.class.binary_osxfuse_installed? }
+
+  def self.binary_osxfuse_installed?
+    File.exist?("/usr/local/include/osxfuse/fuse.h") &&
+      !File.symlink?("/usr/local/include/osxfuse")
+  end
+
+  env do
+    ENV.append_path "PKG_CONFIG_PATH",
+                    "/usr/local/lib/pkgconfig:#{HOMEBREW_PREFIX}/lib/pkgconfig:"\
+                    "#{HOMEBREW_PREFIX}/opt/openssl@1.1/lib/pkgconfig"
+    ENV.append_path "BORG_OPENSSL_PREFIX", "#{HOMEBREW_PREFIX}/opt/openssl@1.1/"
+
+    unless HOMEBREW_PREFIX.to_s == "/usr/local"
+      ENV.append_path "HOMEBREW_LIBRARY_PATHS", "/usr/local/lib"
+      ENV.append_path "HOMEBREW_INCLUDE_PATHS", "/usr/local/include/osxfuse"
+    end
+  end
+
+  def message
+    "osxfuse is required to build ltfs. Please run `brew install --cask osxfuse` first."
+  end
+end
+
 class Ltfs < Formula
   desc 'Reference implementation of the LTFS format Spec for stand alone tape drive'
   homepage 'https://github.com/LinearTapeFileSystem/ltfs'
@@ -22,8 +49,7 @@ class Ltfs < Formula
   depends_on 'icu4c'
 
   on_macos do
-    deprecate! date: "2021-02-18", because: "requires FUSE"
-    depends_on :osxfuse
+    depends_on OsxfuseRequirement
     ENV['LDFLAGS'] = '-framework CoreFoundation -framework IOKit'
   end
 
