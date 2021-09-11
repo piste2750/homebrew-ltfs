@@ -64,7 +64,7 @@ class Ltfs < Formula
     ENV['CC'] = 'gcc'
 
     system './autogen.sh'
-    system './configure', "--prefix=#{prefix}", '--disable-snmp'
+    system './configure', "--prefix=#{prefix}", '--disable-snmp', '--enable-buggy-ifs'                                               
     system 'make'
     system 'make', 'install'
   end
