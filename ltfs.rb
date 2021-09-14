@@ -32,8 +32,8 @@ end
 class Ltfs < Formula
   desc 'Reference implementation of the LTFS format Spec for stand alone tape drive'
   homepage 'https://github.com/LinearTapeFileSystem/ltfs'
-  url 'https://github.com/LinearTapeFileSystem/ltfs/archive/v2.4.3.1-10461.tar.gz'
-  sha256 'ae39778a47cb09c126fd394c269cbf464f7b43c876ea71a9c880e1159ce87066'
+  url 'https://github.com/LinearTapeFileSystem/ltfs/archive/v2.4.4.0-10470.tar.gz'
+  sha256 '840989bb50e4cd752473fa3b2f69bb2b844a7c89b8a7f55a4560fa8672709792'
 
   head do
     url 'https://github.com/LinearTapeFileSystem/ltfs.git'
