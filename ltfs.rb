@@ -48,25 +48,34 @@ class Ltfs < Formula
   depends_on 'libxml2'
   depends_on 'icu4c'
 
+  env :std
+  
   on_macos do
     depends_on OsxfuseRequirement
-    ENV['LDFLAGS'] = '-framework CoreFoundation -framework IOKit'
   end
 
   on_linux do
     depends_on "libfuse"
   end
 
-  env :std
-
   def install
-    ENV.deparallelize
-    ENV['CC'] = 'gcc'
+    if OS.mac?
+      ENV.deparallelize
+      ENV['CC'] = 'gcc'
+      ENV['LDFLAGS'] = '-framework CoreFoundation -framework IOKit'
 
-    system './autogen.sh'
-    system './configure', "--prefix=#{prefix}", '--disable-snmp', '--enable-buggy-ifs'                                               
-    system 'make'
-    system 'make', 'install'
+      system './autogen.sh'
+      system './configure', "--prefix=#{prefix}", '--disable-snmp', '--enable-buggy-ifs'
+      system 'make'
+      system 'make', 'install'
+    elsif OS.linux?
+      ENV.deparallelize
+      system './autogen.sh'
+      system './configure', "--prefix=#{prefix}", '--disable-snmp', '--enable-buggy-ifs'
+      system 'make'
+      system 'make', 'install'
+    end
+
   end
 
   test do
