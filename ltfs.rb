@@ -5,11 +5,15 @@
 class OsxfuseRequirement < Requirement
   fatal true
 
-  satisfy(build_env: false) { self.class.binary_osxfuse_installed? }
+  satisfy(build_env: false) { self.class.binary_osxfuse_installed? || self.class.binary_macfuse_installed? }
 
   def self.binary_osxfuse_installed?
     File.exist?("/usr/local/include/osxfuse/fuse.h") &&
       !File.symlink?("/usr/local/include/osxfuse")
+  end
+
+  def self.binary_macfuse_installed?
+    File.exist?("/usr/local/include/fuse.h")
   end
 
   env do
@@ -18,14 +22,21 @@ class OsxfuseRequirement < Requirement
                     "#{HOMEBREW_PREFIX}/opt/openssl@1.1/lib/pkgconfig"
     ENV.append_path "BORG_OPENSSL_PREFIX", "#{HOMEBREW_PREFIX}/opt/openssl@1.1/"
 
-    unless HOMEBREW_PREFIX.to_s == "/usr/local"
-      ENV.append_path "HOMEBREW_LIBRARY_PATHS", "/usr/local/lib"
-      ENV.append_path "HOMEBREW_INCLUDE_PATHS", "/usr/local/include/osxfuse"
+    if self.class.binary_osxfuse_installed?
+      unless HOMEBREW_PREFIX.to_s == "/usr/local"
+        ENV.append_path "HOMEBREW_LIBRARY_PATHS", "/usr/local/lib"
+        ENV.append_path "HOMEBREW_INCLUDE_PATHS", "/usr/local/include/osxfuse"
+      end
+    elsif self.class.binary_macfuse_installed?
+      unless HOMEBREW_PREFIX.to_s == "/usr/local"
+        ENV.append_path "HOMEBREW_LIBRARY_PATHS", "/usr/local/lib"
+        ENV.append_path "HOMEBREW_INCLUDE_PATHS", "/usr/local/include"
+      end
     end
   end
 
   def message
-    "osxfuse is required to build ltfs. Please run `brew install --cask osxfuse` first."
+    "macfuse or osxfuse is required to build ltfs. Please run `brew install --cask macfuse` or `brew install --cask osxfuse` first."
   end
 end
 
@@ -49,7 +60,7 @@ class Ltfs < Formula
   depends_on 'icu4c'
 
   env :std
-  
+
   on_macos do
     depends_on OsxfuseRequirement
   end
